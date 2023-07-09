@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Routes, Route, Link, useLocation } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
 
-function App() {
+import Login from "./components/Login";
+import Register from "./components/Register";
+import Profile from "./components/Profile";
+
+const App = () => {
+  const location = useLocation();
+  const isProfileVisible = location.pathname !== "/profile";
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {isProfileVisible && (
+        <nav className="navbar navbar-expand navbar-dark bg-dark">
+          <Link to={"/"} className="navbar-brand">
+            SignUp
+          </Link>
+          <Link to={"/signin"} className="navbar-brand">
+            SignIn
+          </Link>
+        </nav>
+      )}
+
+      <div className="container mt-3">
+        <Routes>
+          <Route path="/" element={<Register />} />
+          <Route path="/signin" element={<Login />} />
+          <Route path="/profile" element={<Profile />} />
+        </Routes>
+      </div>
     </div>
   );
-}
+};
 
 export default App;
